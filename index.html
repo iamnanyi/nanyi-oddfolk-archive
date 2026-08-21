@@ -4,13 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <meta name="theme-color" content="#f2eadb" />
+    <meta name="application-version" content="1.0.1" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='29' fill='%23d8dd51' stroke='%2314243b' stroke-width='4'/%3E%3Ctext x='32' y='38' text-anchor='middle' font-family='monospace' font-weight='700' font-size='18' fill='%2314243b'%3EOF%3C/text%3E%3C/svg%3E" />
     <meta
       name="description"
       content="Oddfolk Archive：一个由 JavaScript 实时绘制的参数化手绘人像实验室。"
     />
     <title>Oddfolk Archive — 参数化人像档案室</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=1.0.1" />
   </head>
   <body>
     <a class="skip-link" href="#top">跳到主要内容</a>
@@ -52,6 +53,8 @@
           </div>
           <div class="specimen-meta">
             <span id="archetypeLabel">TYPE / OBSERVER</span>
+            <span id="styleLabel">STYLE / LINEWORK</span>
+            <span id="profileLabel">AGE / ADULT</span>
             <span id="coordinateLabel">X 00.00 / Y 00.00</span>
             <span>JS / CANVAS</span>
           </div>
@@ -75,23 +78,58 @@
           </div>
           <p id="seedHint" class="field-hint">相同编号始终对应同一张脸</p>
 
-          <div class="control-group">
-            <label class="field-label" for="moodSelect">表情倾向 / TEMPER</label>
-            <select id="moodSelect">
-              <option value="native">由编号决定</option>
-              <option value="quiet">冷静</option>
-              <option value="bright">明朗</option>
-              <option value="skeptical">怀疑</option>
-              <option value="sleepy">困倦</option>
-            </select>
+          <div class="control-row">
+            <div class="control-group">
+              <label class="field-label" for="styleSelect">绘制风格 / STYLE</label>
+              <select id="styleSelect">
+                <option value="native">由编号决定</option>
+                <option value="classic">线稿档案</option>
+                <option value="cutout">剪纸拼贴</option>
+                <option value="poster">海报套印</option>
+                <option value="geometry">几何标本</option>
+                <option value="mono">单线速写</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <label class="field-label" for="moodSelect">表情倾向 / TEMPER</label>
+              <select id="moodSelect">
+                <option value="native">由编号决定</option>
+                <option value="quiet">冷静</option>
+                <option value="bright">明朗</option>
+                <option value="skeptical">怀疑</option>
+                <option value="sleepy">困倦</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="control-row">
+            <div class="control-group">
+              <label class="field-label" for="genderSelect">性别呈现 / GENDER</label>
+              <select id="genderSelect">
+                <option value="native">由编号决定</option>
+                <option value="feminine">偏女性化</option>
+                <option value="masculine">偏男性化</option>
+                <option value="neutral">中性</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <label class="field-label" for="ageSelect">年龄阶段 / AGE</label>
+              <select id="ageSelect">
+                <option value="native">由编号决定</option>
+                <option value="young">少年</option>
+                <option value="adult">青年</option>
+                <option value="mature">中年</option>
+                <option value="elder">年长</option>
+              </select>
+            </div>
           </div>
 
           <div class="control-group">
             <div class="range-head">
               <label class="field-label" for="detailRange">笔触密度 / DETAIL</label>
-              <output id="detailOutput" for="detailRange">64%</output>
+              <output id="detailOutput" for="detailRange">58%</output>
             </div>
-            <input id="detailRange" type="range" min="25" max="100" value="64" />
+            <input id="detailRange" type="range" min="20" max="100" value="58" />
           </div>
 
           <fieldset class="control-group palette-fieldset">
@@ -112,7 +150,7 @@
           <label class="switch-row" for="motionToggle">
             <span>
               <b>活墨水 / LIVE INK</b>
-              <small>让笔迹保持轻微呼吸</small>
+              <small>开启后让笔迹保持轻微呼吸</small>
             </span>
             <input id="motionToggle" type="checkbox" checked />
             <i aria-hidden="true"></i>
@@ -156,10 +194,10 @@
     <footer>
       <span>ODDFOLK ARCHIVE</span>
       <span>EVERY FEATURE IS DRAWN AT RUNTIME</span>
-      <span>© 2026 / EXPERIMENT 01</span>
+      <span>VERSION 1.0.1 / EXPERIMENT 01</span>
     </footer>
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
-    <script src="./app.js" defer></script>
+    <script src="./app.js?v=1.0.1" defer></script>
   </body>
 </html>
