@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#f2eadb" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='29' fill='%23d8dd51' stroke='%2314243b' stroke-width='4'/%3E%3Ctext x='32' y='38' text-anchor='middle' font-family='monospace' font-weight='700' font-size='18' fill='%2314243b'%3EOF%3C/text%3E%3C/svg%3E" />
+    <meta
+      name="description"
+      content="Oddfolk Archive：一个由 JavaScript 实时绘制的参数化手绘人像实验室。"
+    />
+    <title>Oddfolk Archive — 参数化人像档案室</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#top">跳到主要内容</a>
+    <div class="noise" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Oddfolk Archive 首页">
+        <span class="brand-mark" aria-hidden="true">OF</span>
+        <span>
+          <strong>ODDFOLK</strong>
+          <small>PORTRAIT ARCHIVE / 2026</small>
+        </span>
+      </a>
+      <div class="header-note" aria-hidden="true">
+        <span>GENERATIVE STUDY</span>
+        <i></i>
+        <span>NO BITMAPS</span>
+      </div>
+    </header>
+
+    <main id="top" class="shell">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow"><span>实验 01</span> / 一张脸可以是一组规则</p>
+        <h1 id="page-title">每个陌生人，<br /><em>都藏在一个数字里。</em></h1>
+        <p class="lede">
+          输入任意编号，生成一位可被再次找到的虚构人物。轮廓、五官与配饰来自稳定参数；纸张、断墨和轻微错版则在每一帧重新发生。
+        </p>
+      </section>
+
+      <section class="studio" aria-label="人像生成工作台">
+        <div class="canvas-panel">
+          <div class="plate-label">
+            <span>SUBJECT / <b id="subjectNumber">000000</b></span>
+            <span id="liveStatus">LIVE INK</span>
+          </div>
+          <div class="canvas-wrap">
+            <canvas id="portraitCanvas" width="900" height="1050" aria-label="程序生成的手绘人物肖像"></canvas>
+            <div class="corner corner-a" aria-hidden="true"></div>
+            <div class="corner corner-b" aria-hidden="true"></div>
+          </div>
+          <div class="specimen-meta">
+            <span id="archetypeLabel">TYPE / OBSERVER</span>
+            <span id="coordinateLabel">X 00.00 / Y 00.00</span>
+            <span>JS / CANVAS</span>
+          </div>
+        </div>
+
+        <aside class="controls" aria-label="生成参数">
+          <div class="control-heading">
+            <span>CONTROL DESK</span>
+            <span class="status-dot">ACTIVE</span>
+          </div>
+
+          <label class="field-label" for="seedInput">人物编号 / SEED</label>
+          <div class="seed-row">
+            <button id="previousSeed" class="icon-button" type="button" aria-label="上一个人物">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+            </button>
+            <input id="seedInput" inputmode="numeric" autocomplete="off" maxlength="10" value="314159" aria-describedby="seedHint" />
+            <button id="nextSeed" class="icon-button" type="button" aria-label="下一个人物">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+            </button>
+          </div>
+          <p id="seedHint" class="field-hint">相同编号始终对应同一张脸</p>
+
+          <div class="control-group">
+            <label class="field-label" for="moodSelect">表情倾向 / TEMPER</label>
+            <select id="moodSelect">
+              <option value="native">由编号决定</option>
+              <option value="quiet">冷静</option>
+              <option value="bright">明朗</option>
+              <option value="skeptical">怀疑</option>
+              <option value="sleepy">困倦</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <div class="range-head">
+              <label class="field-label" for="detailRange">笔触密度 / DETAIL</label>
+              <output id="detailOutput" for="detailRange">64%</output>
+            </div>
+            <input id="detailRange" type="range" min="25" max="100" value="64" />
+          </div>
+
+          <fieldset class="control-group palette-fieldset">
+            <legend class="field-label">套印方案 / INK SET</legend>
+            <div class="palette-row">
+              <button class="palette active" data-palette="archive" type="button" aria-label="档案蓝与珊瑚红" aria-pressed="true">
+                <i style="--swatch:#183153"></i><i style="--swatch:#f15d4a"></i>
+              </button>
+              <button class="palette" data-palette="moss" type="button" aria-label="苔藓绿与朱红" aria-pressed="false">
+                <i style="--swatch:#1c4b3e"></i><i style="--swatch:#e45b37"></i>
+              </button>
+              <button class="palette" data-palette="plum" type="button" aria-label="李子紫与酸性黄" aria-pressed="false">
+                <i style="--swatch:#402846"></i><i style="--swatch:#d6d83d"></i>
+              </button>
+            </div>
+          </fieldset>
+
+          <label class="switch-row" for="motionToggle">
+            <span>
+              <b>活墨水 / LIVE INK</b>
+              <small>让笔迹保持轻微呼吸</small>
+            </span>
+            <input id="motionToggle" type="checkbox" checked />
+            <i aria-hidden="true"></i>
+          </label>
+
+          <button id="randomizeButton" class="primary-button" type="button">
+            <span>遇见下一个陌生人</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </button>
+          <button id="saveButton" class="secondary-button" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 19h14" /></svg>
+            保存到系统相册
+          </button>
+        </aside>
+      </section>
+
+      <section class="archive-strip" aria-labelledby="archive-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">RECENT SIGHTINGS</p>
+            <h2 id="archive-title">附近的陌生人</h2>
+          </div>
+          <p>点击任意档案，把他带回工作台。</p>
+        </div>
+        <div id="archiveGrid" class="archive-grid"></div>
+      </section>
+
+      <section class="method" aria-labelledby="method-title">
+        <div>
+          <p class="eyebrow">BEHIND THE FACE</p>
+          <h2 id="method-title">不是图片生成，<br />是规则在画画。</h2>
+        </div>
+        <ol>
+          <li><b>01</b><span><strong>身份参数</strong>脸型、五官、发型被拆成互不干扰的随机流。</span></li>
+          <li><b>02</b><span><strong>几何骨架</strong>每一张脸先成为曲线、锚点和比例关系。</span></li>
+          <li><b>03</b><span><strong>活墨渲染</strong>断线、复描和错位套色，让代码保留手的痕迹。</span></li>
+        </ol>
+      </section>
+    </main>
+
+    <footer>
+      <span>ODDFOLK ARCHIVE</span>
+      <span>EVERY FEATURE IS DRAWN AT RUNTIME</span>
+      <span>© 2026 / EXPERIMENT 01</span>
+    </footer>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
