@@ -55,12 +55,12 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .header-note i { width: 42px; height: 1px; background: var(--ink); }
 
 .shell { width: min(1380px, calc(100% - 40px)); margin: 0 auto; }
-.intro { padding: clamp(58px, 8vw, 112px) 0 54px; display: grid; grid-template-columns: 1fr minmax(300px, .66fr); align-items: end; column-gap: 8vw; }
+.intro { padding: clamp(58px, 8vw, 112px) 0 54px; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(300px, .62fr); align-items: end; column-gap: 8vw; }
 .eyebrow { margin: 0 0 18px; font: 700 11px/1.4 ui-monospace, SFMono-Regular, monospace; letter-spacing: .15em; text-transform: uppercase; }
 .eyebrow span { background: var(--accent); color: white; padding: 5px 8px; margin-right: 6px; }
 .intro .eyebrow { grid-column: 1 / -1; }
 h1, h2 { margin: 0; letter-spacing: -.055em; font-family: Georgia, "Times New Roman", serif; font-weight: 500; }
-h1 { font-size: clamp(48px, 6.5vw, 94px); line-height: .93; }
+h1 { font-size: clamp(48px, 6vw, 82px); line-height: 1.08; }
 h1 em { font-weight: 400; color: var(--accent); }
 .lede { margin: 0 0 6px; max-width: 530px; font-size: clamp(16px, 1.4vw, 19px); line-height: 1.75; }
 
@@ -90,6 +90,7 @@ canvas { width: 100%; height: 100%; display: block; }
 .icon-button svg, .primary-button svg, .secondary-button svg { width: 19px; fill: none; stroke: currentColor; stroke-width: 2; }
 #seedInput { width: 100%; text-align: center; border-radius: 0; font: 700 16px/1 ui-monospace, SFMono-Regular, monospace; letter-spacing: .12em; cursor: text; }
 .field-hint { margin: 8px 0 0; color: rgba(20,36,59,.62); font-size: 11px; }
+.control-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .control-group { margin-top: 27px; }
 select { appearance: none; width: 100%; height: 46px; padding: 0 44px 0 13px; border: 1.5px solid var(--ink); border-radius: 0; color: var(--ink); background: var(--paper-light) url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 20 20'%3E%3Cpath d='m6 8 4 4 4-4' fill='none' stroke='%2314243b' stroke-width='1.8'/%3E%3C/svg%3E") no-repeat right 12px center/20px; }
 .range-head { display: flex; justify-content: space-between; }
@@ -158,10 +159,11 @@ footer {
   .header-note { display: none; }
   .shell { width: min(100% - 24px, 1380px); }
   .intro { padding-top: 52px; }
-  h1 { font-size: clamp(43px, 14vw, 65px); }
+  h1 { font-size: clamp(43px, 14vw, 65px); line-height: 1.03; }
   .canvas-panel { padding: 9px; }
-  .specimen-meta span:nth-child(2) { display: none; }
+  .specimen-meta span:nth-child(2), .specimen-meta span:nth-child(3), .specimen-meta span:nth-child(4) { display: none; }
   .controls { padding: 22px 18px; }
+  .control-row { gap: 8px; }
   .archive-strip { padding: 90px 0 80px; }
   .section-heading { display: block; }
   .section-heading > p { margin-top: 16px; }
